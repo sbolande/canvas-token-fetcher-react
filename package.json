@@ -1,0 +1,98 @@
+{
+  "name": "canvas-token-fetcher",
+  "productName": "canvas-token-fetcher",
+  "version": "1.0.0",
+  "description": "Canvas API Token Fetcher - powered by Electron, Puppeteer, and React",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\"",
+    "dev": "electron-forge start -- --dev-mode"
+  },
+  "keywords": [
+    "instructure",
+    "canvas",
+    "puppeteer",
+    "electron",
+    "electron-forge",
+    "react",
+    "BYU-Idaho"
+  ],
+  "author": {
+    "name": "Seth Bolander",
+    "email": "bol15015@byui.edu"
+  },
+  "homepage": "",
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "canvas_token_fetcher"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/index.html",
+                  "js": "./src/renderer.js",
+                  "name": "main_window"
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-react": "^7.16.7",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@electron-forge/plugin-webpack": "^6.0.0-beta.63",
+    "@vercel/webpack-asset-relocator-loader": "^1.7.0",
+    "babel-loader": "^8.2.4",
+    "css-loader": "^6.7.1",
+    "electron": "18.0.1",
+    "node-loader": "^2.0.0",
+    "style-loader": "^3.3.1"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "moment": "^2.29.2",
+    "puppeteer": "^13.5.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}
