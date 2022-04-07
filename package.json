@@ -25,7 +25,7 @@
     "name": "Seth Bolander",
     "email": "bol15015@byui.edu"
   },
-  "homepage": "",
+  "homepage": "https://github.com/sbolande/canvas-token-fetcher-react#readme",
   "license": "MIT",
   "config": {
     "forge": {
@@ -71,6 +71,10 @@
         ]
       ]
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sbolande/canvas-token-fetcher-react"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
