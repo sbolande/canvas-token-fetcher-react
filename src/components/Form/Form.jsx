@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Error, Input, Submit, Token } from "../Input/Input.jsx";
+import { Checkbox, Error, Input, Submit, Token } from "../Input/Input.jsx";
 import { LoadingTitle } from "../LoadingTitle/LoadingTitle.jsx";
 import styles from "./Form.module.css";
 
@@ -18,6 +18,7 @@ export const Form = () => {
   const subdomainRef = useRef();
   const purposeRef = useRef();
   const expiresRef = useRef();
+  const rememberRef = useRef();
   const tokenRef = useRef();
   const errorRef = useRef();
 
@@ -25,6 +26,7 @@ export const Form = () => {
     e.preventDefault();
     setHideError(true);
     setIsLoading(true);
+    console.log(rememberRef.current.checked);
 
     let purpose =
       purposeRef.current.value === "" ? "API Calls" : purposeRef.current.value;
@@ -102,7 +104,12 @@ export const Form = () => {
           hint={{ label: "Defaults to this Saturday" }}
           value={moment().day(6).format("YYYY-MM-DDTHH:mm")}
         />
-        <Submit />
+        <Checkbox
+          ref={rememberRef}
+          name="remember_me"
+          label="Remember me for next time"
+        />
+        <Submit>FETCH TOKEN</Submit>
         <Token
           ref={tokenRef}
           name="token"

@@ -9,8 +9,8 @@ export const Input = React.forwardRef(
       type,
       required = false,
       hidden = false,
-      disabled = false,
       autoFocus = false,
+      value,
       hint,
       list,
     },
@@ -26,12 +26,13 @@ export const Input = React.forwardRef(
         <input
           ref={ref}
           className={styles.input}
+          id={name}
           type={type}
           name={name}
           required={required}
-          disabled={disabled}
           list={listId}
           autoFocus={autoFocus}
+          defaultValue={value}
         />
         {hint && (
           <span
@@ -54,15 +55,20 @@ export const Input = React.forwardRef(
   }
 );
 
-export const Submit = () => {
-  return (
-    <li className={`${styles.container} ${styles.submit_container}`}>
-      <button type="submit" id="submit">
-        FETCH TOKEN
-      </button>
-    </li>
-  );
-};
+export const Checkbox = React.forwardRef(({ name, label }, ref) => (
+  <li className={styles.container}>
+    <input ref={ref} name={name} id={name} type="checkbox" />
+    <label htmlFor={name}>{label}</label>
+  </li>
+));
+
+export const Submit = (props) => (
+  <li className={`${styles.container} ${styles.submit_container}`}>
+    <button type="submit" id="submit">
+      {props.children}
+    </button>
+  </li>
+);
 
 export const Token = React.forwardRef(({ name, label, hidden, hint }, ref) => (
   <li className={`${styles.container} ${hidden && styles.hidden}`}>
