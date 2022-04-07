@@ -26,13 +26,23 @@ export const Form = () => {
     e.preventDefault();
     setHideError(true);
     setIsLoading(true);
-    console.log(rememberRef.current.checked);
 
+    // save user data
+    if (rememberRef.current.checked) {
+      ipcRenderer.invoke("remember-me", {
+        username: usernameRef.current.value,
+        subdomain: subdomainRef.current.value,
+        purpose: purpose,
+        rememberMe: rememberRef.current.value,
+      });
+    }
+
+    // send form data
     let purpose =
       purposeRef.current.value === "" ? "API Calls" : purposeRef.current.value;
 
     ipcRenderer
-      .invoke("form-submission", {
+      .invoke("fetch-token", {
         username: usernameRef.current.value,
         password: passwordRef.current.value,
         subdomain: subdomainRef.current.value,

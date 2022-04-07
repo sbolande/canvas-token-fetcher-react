@@ -55,9 +55,15 @@ export const Input = React.forwardRef(
   }
 );
 
-export const Checkbox = React.forwardRef(({ name, label }, ref) => (
+export const Checkbox = React.forwardRef(({ name, label, checked }, ref) => (
   <li className={styles.container}>
-    <input ref={ref} name={name} id={name} type="checkbox" />
+    <input
+      ref={ref}
+      name={name}
+      id={name}
+      type="checkbox"
+      defaultChecked={checked}
+    />
     <label htmlFor={name}>{label}</label>
   </li>
 ));

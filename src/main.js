@@ -25,9 +25,18 @@ const createWindow = () => {
   // Open the DevTools.
   if (isTest) mainWindow.webContents.openDevTools();
 
+  // handle remember me
   ipcMain.handle(
-    "form-submission",
-    async (event, { username, password, subdomain, purpose, expires }) => {
+    "remember-me",
+    async (_, { username, subdomain, purpose, rememberMe }) => {
+      console.log("Received remember me, saving user data");
+    }
+  );
+
+  // handle form submission
+  ipcMain.handle(
+    "fetch-token",
+    async (_, { username, password, subdomain, purpose, expires }) => {
       console.log(
         `Received form submission, fetching token for ${subdomain}.instructure.com`
       );
