@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Checkbox, Error, Input, Submit, Token } from "../Input/Input.jsx";
 import { LoadingTitle } from "../LoadingTitle/LoadingTitle.jsx";
 import styles from "./Form.module.css";
@@ -22,25 +22,33 @@ export const Form = () => {
   const tokenRef = useRef();
   const errorRef = useRef();
 
+  useEffect(() => {
+    ipcRenderer.invoke("get-presets").then((presets) => {
+      usernameRef.current.value = presets.username;
+      subdomainRef.current.value = presets.subdomain;
+      purposeRef.current.value = presets.purpose;
+      expiresRef.current.value = moment().day(6).format("YYYY-MM-DDTHH:mm");
+    });
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setHideError(true);
     setIsLoading(true);
 
+    let purpose =
+      purposeRef.current.value === "" ? "API Calls" : purposeRef.current.value;
+
     // save user data
     if (rememberRef.current.checked) {
-      ipcRenderer.invoke("remember-me", {
+      ipcRenderer.invoke("set-presets", {
         username: usernameRef.current.value,
         subdomain: subdomainRef.current.value,
         purpose: purpose,
-        rememberMe: rememberRef.current.value,
       });
     }
 
     // send form data
-    let purpose =
-      purposeRef.current.value === "" ? "API Calls" : purposeRef.current.value;
-
     ipcRenderer
       .invoke("fetch-token", {
         username: usernameRef.current.value,
@@ -112,7 +120,6 @@ export const Form = () => {
           type="datetime-local"
           required
           hint={{ label: "Defaults to this Saturday" }}
-          value={moment().day(6).format("YYYY-MM-DDTHH:mm")}
         />
         <Checkbox
           ref={rememberRef}

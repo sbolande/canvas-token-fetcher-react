@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron";
-import runPuppeteer from "./puppeteer";
+import { getPresets, setPresets } from "./presetHandlers";
+import runPuppeteer from "./puppeteerHandlers";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -9,29 +10,12 @@ if (require("electron-squirrel-startup")) {
 
 const createWindow = () => {
   const isTest = process.argv[2] === "--dev-mode";
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: isTest ? 1200 : 700,
-    height: 730,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-    },
-  });
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-  // Open the DevTools.
-  if (isTest) mainWindow.webContents.openDevTools();
+  // handle on load for getting preset values
+  ipcMain.handleOnce("get-presets", getPresets);
 
   // handle remember me
-  ipcMain.handle(
-    "remember-me",
-    async (_, { username, subdomain, purpose, rememberMe }) => {
-      console.log("Received remember me, saving user data");
-    }
-  );
+  ipcMain.handle("set-presets", setPresets);
 
   // handle form submission
   ipcMain.handle(
@@ -50,6 +34,22 @@ const createWindow = () => {
       );
     }
   );
+
+  // Create the browser window.
+  const mainWindow = new BrowserWindow({
+    width: isTest ? 1200 : 700,
+    height: 730,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+
+  // and load the index.html of the app.
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+  // Open the DevTools.
+  if (isTest) mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
