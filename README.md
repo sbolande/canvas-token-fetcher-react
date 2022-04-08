@@ -31,7 +31,7 @@ Create a shortcut to the created `/out/make/canvas-token-fetcher-1.0.0 Setup.exe
 
 ## Usage
 
-Once you've run the `.exe`, the application will start up.
+Once you've run the `.exe` (or run `npm start`), the application will start up.
 The app takes the following inputs:
 
 1. **Username**: Your Canvas admin username.
@@ -39,6 +39,7 @@ The app takes the following inputs:
 3. **Subdomain**: The URL subdomain -> `{subdomain}.instructure.com`.
 4. **Purpose**: The purpose for retrieving a token, _optional_.
 5. **Expires**: The expiration date-time of the token, defaults to upcoming Friday.
+6. **Remember Me**: Save your username, subdomain, and purpose for next time. **Password is not saved**. These presets are saved locally using [electron-store](https://github.com/sindresorhus/electron-store#readme), so be aware!
 
 Press `FETCH TOKEN` and the Puppeteer will run and grab it for you. If successful, press `Copy to clipboard` and paste your token wherever you need!
 
