@@ -10,7 +10,6 @@ export const Input = React.forwardRef(
       required = false,
       hidden = false,
       autoFocus = false,
-      value,
       hint,
       list,
     },
@@ -25,14 +24,14 @@ export const Input = React.forwardRef(
         </label>
         <input
           ref={ref}
-          className={styles.input}
           id={name}
-          type={type}
           name={name}
-          required={required}
+          className={styles.input}
+          type={type}
           list={listId}
+          required={required}
           autoFocus={autoFocus}
-          defaultValue={value}
+          spellCheck="false"
         />
         {hint && (
           <span
@@ -76,16 +75,17 @@ export const Submit = (props) => (
   </li>
 );
 
-export const Token = React.forwardRef(({ name, label, hidden, hint }, ref) => (
-  <li className={`${styles.container} ${hidden && styles.hidden}`}>
+export const Token = ({ name, label, value, hint }) => (
+  <li className={styles.container}>
     <label className={`${styles.label} ${styles.token}`} htmlFor={name}>
       {label}
     </label>
     <input
-      ref={ref}
+      name={name}
+      id={name}
       className={styles.input}
       type="text"
-      name={name}
+      defaultValue={value}
       disabled
     />
     {hint && (
@@ -98,19 +98,20 @@ export const Token = React.forwardRef(({ name, label, hidden, hint }, ref) => (
       </span>
     )}
   </li>
-));
+);
 
-export const Error = React.forwardRef(({ name, label, hidden }, ref) => (
-  <li className={`${styles.container} ${hidden && styles.hidden}`}>
+export const Error = ({ name, label, value }) => (
+  <li className={styles.container}>
     <label className={`${styles.label} ${styles.error}`} htmlFor={name}>
       {label}
     </label>
     <input
-      ref={ref}
+      name={name}
+      id={name}
       className={`${styles.input} ${styles.error}`}
       type="text"
-      name={name}
+      defaultValue={value}
       disabled
     />
   </li>
-));
+);

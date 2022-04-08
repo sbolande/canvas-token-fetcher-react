@@ -2,7 +2,7 @@
   display: block;
   padding: 9px;
   border: 1px solid #006eb6;
-  margin-bottom: 30px;
+  margin: 1.3rem 0;
   border-radius: 3px;
 }
 
@@ -59,6 +59,8 @@
 .submit_container {
   border: none;
   text-align: center;
+  padding: 0;
+  margin-top: 0;
   margin-bottom: 15px;
   display: block;
 }
@@ -69,8 +71,4 @@
 
 .token {
   color: #006eb6;
-}
-
-.hidden {
-  display: none;
 }

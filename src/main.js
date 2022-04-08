@@ -11,8 +11,18 @@ if (require("electron-squirrel-startup")) {
 const createWindow = () => {
   const isTest = process.argv[2] === "--dev-mode";
 
+  // Create the browser window.
+  const mainWindow = new BrowserWindow({
+    width: isTest ? 1200 : 700,
+    height: 800,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+
   // handle on load for getting preset values
-  ipcMain.handleOnce("get-presets", getPresets);
+  ipcMain.handle("get-presets", getPresets);
 
   // handle remember me
   ipcMain.handle("set-presets", setPresets);
@@ -34,16 +44,6 @@ const createWindow = () => {
       );
     }
   );
-
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: isTest ? 1200 : 700,
-    height: 730,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-    },
-  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);

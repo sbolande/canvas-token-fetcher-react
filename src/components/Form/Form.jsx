@@ -8,8 +8,10 @@ const { ipcRenderer } = window.require("electron");
 
 export const Form = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [hideToken, setHideToken] = useState(true);
-  const [hideError, setHideError] = useState(true);
+  const [showToken, setShowToken] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [token, setToken] = useState();
+  const [error, setError] = useState();
   const [passwordType, setPasswordType] = useState("password");
   const [tokenCopied, setTokenCopied] = useState(false);
 
@@ -19,8 +21,6 @@ export const Form = () => {
   const purposeRef = useRef();
   const expiresRef = useRef();
   const rememberRef = useRef();
-  const tokenRef = useRef();
-  const errorRef = useRef();
 
   useEffect(() => {
     ipcRenderer.invoke("get-presets").then((presets) => {
@@ -33,7 +33,7 @@ export const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setHideError(true);
+    setShowError(false);
     setIsLoading(true);
 
     let purpose =
@@ -58,13 +58,13 @@ export const Form = () => {
         expires: expiresRef.current.value,
       })
       .then((res) => {
-        tokenRef.current.value = res;
-        setHideToken(false);
+        setToken(res);
+        setShowToken(true);
       })
       .catch((err) => {
         console.error(err);
-        errorRef.current.value = err.message.split(": ")[1];
-        setHideError(false);
+        setError(err.message.split(": ")[1]);
+        setShowError(true);
       })
       .finally(() => {
         setIsLoading(false);
@@ -72,7 +72,7 @@ export const Form = () => {
   };
 
   return (
-    <form name="login" onSubmit={handleSubmit}>
+    <form className={styles.form} name="login" onSubmit={handleSubmit}>
       <LoadingTitle loading={isLoading}>Canvas Token Fetcher</LoadingTitle>
       <ul className={styles.input_list}>
         <Input
@@ -127,25 +127,28 @@ export const Form = () => {
           label="Remember me for next time"
         />
         <Submit>FETCH TOKEN</Submit>
-        <Token
-          ref={tokenRef}
-          name="token"
-          label="Token"
-          hidden={hideToken}
-          hint={{
-            label: !tokenCopied ? "Copy to clipboard" : "Copied!",
-            onClick: () => {
-              navigator.clipboard.writeText(tokenRef.current.value).then(() => {
-                console.log("Copied token to clipboard.");
-                setTokenCopied(true);
-                setTimeout(() => {
-                  setTokenCopied(false);
-                }, 5000);
-              });
-            },
-          }}
-        />
-        <Error ref={errorRef} name="error" label="Error" hidden={hideError} />
+        {showToken && (
+          <Token
+            name="token"
+            label="Token"
+            value={token}
+            hint={{
+              label: !tokenCopied ? "Copy to clipboard" : "Copied!",
+              onClick: () => {
+                navigator.clipboard
+                  .writeText(tokenRef.current.value)
+                  .then(() => {
+                    console.log("Copied token to clipboard.");
+                    setTokenCopied(true);
+                    setTimeout(() => {
+                      setTokenCopied(false);
+                    }, 5000);
+                  });
+              },
+            }}
+          />
+        )}
+        {showError && <Error name="error" label="Error" value={error} />}
       </ul>
     </form>
   );
