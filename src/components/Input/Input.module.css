@@ -56,15 +56,6 @@
   background: #a6a6a6;
 }
 
-.submit_container {
-  border: none;
-  text-align: center;
-  padding: 0;
-  margin-top: 0;
-  margin-bottom: 15px;
-  display: block;
-}
-
 .error {
   color: #ff3737;
 }

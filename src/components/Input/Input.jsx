@@ -24,8 +24,8 @@ export const Input = React.forwardRef(
         </label>
         <input
           ref={ref}
-          id={name}
           name={name}
+          id={name}
           className={styles.input}
           type={type}
           list={listId}
@@ -66,14 +66,6 @@ export const Checkbox = React.forwardRef(({ name, label, checked }, ref) => (
     <label htmlFor={name}>{label}</label>
   </li>
 ));
-
-export const Submit = (props) => (
-  <li className={`${styles.container} ${styles.submit_container}`}>
-    <button type="submit" id="submit">
-      {props.children}
-    </button>
-  </li>
-);
 
 export const Token = ({ name, label, value, hint }) => (
   <li className={styles.container}>

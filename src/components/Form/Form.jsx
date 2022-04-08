@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Checkbox, Error, Input, Submit, Token } from "../Input/Input.jsx";
+import { Checkbox, Error, Input, Token } from "../Input/Input.jsx";
+import { Submit } from "../Submit/Submit.jsx";
 import { LoadingTitle } from "../LoadingTitle/LoadingTitle.jsx";
 import styles from "./Form.module.css";
 
@@ -126,7 +127,9 @@ export const Form = () => {
           name="remember_me"
           label="Remember me for next time"
         />
-        <Submit>FETCH TOKEN</Submit>
+        <Submit isSubmitting={isLoading}>
+          {!isLoading ? "FETCH TOKEN" : "FETCHING"}
+        </Submit>
         {showToken && (
           <Token
             name="token"

@@ -1,0 +1,49 @@
+.submit_container {
+  display: block;
+  border: none;
+  text-align: center;
+  padding: 0;
+  display: block;
+}
+
+.submit {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  background: #006eb6;
+  cursor: pointer;
+  min-width: 12rem;
+}
+
+.submit:disabled {
+  cursor: default;
+}
+
+.submit:hover:enabled {
+  filter: brightness(80%);
+}
+
+/* spinner from https://codepen.io/mandelid/pen/kNBYLJ */
+.spinner {
+  display: inline-block;
+  margin-left: 0.5rem;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #0099ff;
+  border-radius: 50%;
+  border-top-color: #96d5ff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
