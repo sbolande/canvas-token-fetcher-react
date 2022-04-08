@@ -24,12 +24,19 @@ export const Form = () => {
   const rememberRef = useRef();
 
   useEffect(() => {
-    ipcRenderer.invoke("get-presets").then((presets) => {
-      usernameRef.current.value = presets.username;
-      subdomainRef.current.value = presets.subdomain;
-      purposeRef.current.value = presets.purpose;
-      expiresRef.current.value = moment().day(6).format("YYYY-MM-DDTHH:mm");
-    });
+    ipcRenderer
+      .invoke("get-presets")
+      .then((presets) => {
+        usernameRef.current.value = presets.username;
+        subdomainRef.current.value = presets.subdomain;
+        purposeRef.current.value = presets.purpose;
+        expiresRef.current.value = moment().day(6).format("YYYY-MM-DDTHH:mm");
+      })
+      .then(() => {
+        // autofocus first empty field
+        if (usernameRef.current.value === "") usernameRef.current.focus();
+        else if (passwordRef.current.value === "") passwordRef.current.focus();
+      });
   }, []);
 
   const handleSubmit = (e) => {
@@ -37,8 +44,8 @@ export const Form = () => {
     setShowError(false);
     setIsLoading(true);
 
-    let purpose =
-      purposeRef.current.value === "" ? "API Calls" : purposeRef.current.value;
+    let purposeVal = purposeRef.current.value;
+    let purpose = purposeVal === "" ? "API Calls" : purposeVal;
 
     // save user data
     if (rememberRef.current.checked) {
@@ -82,7 +89,6 @@ export const Form = () => {
           label="Canvas Admin Username"
           type="text"
           required
-          autoFocus
         />
         <Input
           ref={passwordRef}

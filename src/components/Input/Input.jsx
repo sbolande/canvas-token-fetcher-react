@@ -3,16 +3,7 @@ import styles from "./Input.module.css";
 
 export const Input = React.forwardRef(
   (
-    {
-      name,
-      label,
-      type,
-      required = false,
-      hidden = false,
-      autoFocus = false,
-      hint,
-      list,
-    },
+    { name, label, type, required = false, hidden = false, hint, list },
     ref
   ) => {
     const listId = list && `${name}_list`;
@@ -30,7 +21,6 @@ export const Input = React.forwardRef(
           type={type}
           list={listId}
           required={required}
-          autoFocus={autoFocus}
           spellCheck="false"
         />
         {hint && (
