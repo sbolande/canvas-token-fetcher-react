@@ -28,22 +28,9 @@ const createWindow = () => {
   ipcMain.handle("set-presets", setPresets);
 
   // handle form submission
-  ipcMain.handle(
-    "fetch-token",
-    async (_, { username, password, subdomain, purpose, expires }) => {
-      console.log(
-        `Received form submission, fetching token for ${subdomain}.instructure.com`
-      );
-      return await runPuppeteer(
-        username,
-        password,
-        subdomain,
-        purpose,
-        expires,
-        isTest
-      );
-    }
-  );
+  ipcMain.handle("fetch-token", async (_, args) => {
+    return await runPuppeteer({ ...args, isTest });
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);

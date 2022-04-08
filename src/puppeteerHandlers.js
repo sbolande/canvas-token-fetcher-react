@@ -43,14 +43,18 @@ async function getToken(page, subdomain, purpose, expires) {
   return token;
 }
 
-export default async function runPuppeteer(
+export default async function runPuppeteer({
   username,
   password,
   subdomain,
   purpose,
   expires,
-  isTest = false
-) {
+  isTest = false,
+}) {
+  console.log(
+    `Received form submission, fetching token for ${subdomain}.instructure.com`
+  );
+
   var browser;
   var page;
 
@@ -66,7 +70,7 @@ export default async function runPuppeteer(
       args: ["--start-maximized"],
     });
     page = await browser.newPage();
-    page.setDefaultTimeout(6500);
+    page.setDefaultTimeout(8000);
 
     /* LOGIN */
     page = await login(page, subdomain, username, password);
