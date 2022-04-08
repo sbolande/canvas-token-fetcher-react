@@ -5,7 +5,6 @@ import { LoadingTitle } from "../LoadingTitle/LoadingTitle.jsx";
 import styles from "./Form.module.css";
 
 import moment from "moment";
-const { ipcRenderer } = window.require("electron");
 
 export const Form = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,8 +23,8 @@ export const Form = () => {
   const rememberRef = useRef();
 
   useEffect(() => {
-    ipcRenderer
-      .invoke("get-presets")
+    window.presetsAPI
+      .getPresets()
       .then((presets) => {
         usernameRef.current.value = presets.username;
         subdomainRef.current.value = presets.subdomain;
@@ -49,7 +48,7 @@ export const Form = () => {
 
     // save user data
     if (rememberRef.current.checked) {
-      ipcRenderer.invoke("set-presets", {
+      window.presetsAPI.setPresets({
         username: usernameRef.current.value,
         subdomain: subdomainRef.current.value,
         purpose: purpose,
@@ -57,8 +56,8 @@ export const Form = () => {
     }
 
     // send form data
-    ipcRenderer
-      .invoke("fetch-token", {
+    window.tokenAPI
+      .fetch({
         username: usernameRef.current.value,
         password: passwordRef.current.value,
         subdomain: subdomainRef.current.value,

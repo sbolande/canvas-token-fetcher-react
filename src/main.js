@@ -16,9 +16,11 @@ const createWindow = () => {
     width: isTest ? 1200 : 700,
     height: 800,
     webPreferences: {
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
     },
+    title: "Canvas Token Fetcher",
   });
 
   // handle on load for getting preset values
