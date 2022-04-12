@@ -21,17 +21,19 @@ Clone this repository and run a basic NPM install.
 # navigate to the folder you want to clone to, then clone down
 git clone https://github.com/sbolande/canvas-token-fetcher.git
 cd canvas-token-fetcher
+npm install
 # run "electron-forge make" command
 npm run make
 ```
 
-Create a shortcut to the created `/out/make/canvas-token-fetcher-1.0.0 Setup.exe` file and run it.
+The created setup application can be found in the `/out` directory (either a .exe, .dmg, or .zip of some kind).
+Running this application will create a desktop shortcut to run the application.
 
 ---
 
 ## Usage
 
-Once you've run the `.exe` (or run `npm start`), the application will start up.
+Once you've run the installer (or run `npm start`), the application will start up.
 The app takes the following inputs:
 
 1. **Username**: Your Canvas admin username.
@@ -41,7 +43,7 @@ The app takes the following inputs:
 5. **Expires**: The expiration date-time of the token, defaults to upcoming Friday.
 6. **Remember Me**: Save your username, subdomain, and purpose for next time. **Password is not saved**. These presets are saved locally using [electron-store](https://github.com/sindresorhus/electron-store#readme), so be aware!
 
-Press `FETCH TOKEN` and the Puppeteer will run and grab it for you. If successful, press `Copy to clipboard` and paste your token wherever you need!
+Press `FETCH TOKEN` and Puppeteer will run and grab a new token for you. If successful, press `Copy to clipboard` and paste your token wherever you need!
 
 ---
 
